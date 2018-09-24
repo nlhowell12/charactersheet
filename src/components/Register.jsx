@@ -3,9 +3,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import PaperSheet from 'components/Paper';
-import CheckBox from 'components/CheckBox'
+import MultipleSelect from 'components/MultipleSelect'
+import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import TemporaryDrawer from 'components/TemporaryDrawer'
+
 
 class Register extends Component {
     state = {
@@ -16,29 +19,22 @@ class Register extends Component {
       password:'',
       campaigns: []
     }
-  
-    handleCheck = (campaignName) => {
-        const { campaigns } = this.state;
-        if(campaigns.indexOf(campaignName) >= 0) {
-            campaigns.pop(campaigns.indexOf(campaignName))
-            this.setState({
-                ...this.state,
-                campaigns
-            })
-        } else {
-            this.setState({
-                ...this.state,
-                campaigns: [
-                    ...this.state.campaigns,
-                    campaignName
-                ]
-            })
-        }
-        
+
+    handleChange = event => {
+        this.setState({ campaigns: event.target.value });
+      };
+    
+    handleSubmit = () => {
+        // submits user information to the backend API
+        console.log("Submitting")
+        return
     }
+
   render() {
-      const { campaigns } = this.props
+      const { campaigns, history } = this.props
     return (
+        <React.Fragment>
+        <TemporaryDrawer/>
         <MuiThemeProvider>
             <PaperSheet>
             <TextField
@@ -78,14 +74,12 @@ class Register extends Component {
                 style={{alignSelf: 'center'}}
                 />
             <br/>
-            <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-           </PaperSheet>
-           <PaperSheet>
-               {campaigns.map(campaign => {
-                  return <CheckBox key={campaign.campaignName} name={campaign.campaignName} onChange={evt => this.handleCheck(campaign.campaignName)}></CheckBox> 
-               })}
+            <MultipleSelect list={campaigns} selected={this.state.campaigns} onChange={evt => this.handleChange(evt)}></MultipleSelect>
+            <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleSubmit()}/>
+            <Typography variant="caption" style={{alignSelf: 'center'}}>Already have an account? <a style={{color: 'blue', cursor: 'pointer'}} onClick={(evt) => history.push('/')}>Log In</a></Typography>
            </PaperSheet>
          </MuiThemeProvider>
+         </React.Fragment>
     );
   }
 }

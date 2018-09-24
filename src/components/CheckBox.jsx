@@ -26,7 +26,7 @@ class CheckBox extends React.Component {
   };
 
   render() {
-    const { classes, name, onChange } = this.props;
+    const { name, onChange, system } = this.props;
 
     return (
       <FormGroup row>
@@ -36,9 +36,10 @@ class CheckBox extends React.Component {
               checked={this.state.checked}
               onChange={evt => onChange(name)}
               value={name}
+              style={{paddingLeft: '5px', height: '30px'}}
             />
           }
-          label={name}
+          label={`${name} (${system})`}
         />
       </FormGroup>
     );

@@ -24,12 +24,12 @@ export const mailFolderListItems = (
 
 export const otherMailFolderListItems = (
   <div>
-   <a href="mailto:nlhowell12@gmail.com" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
+   <a href="mailto:nlhowell12@gmail.com,robcgabbard@gmail.com?subject=Issue with Character Sheet" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
     <ListItem button>
       <ListItemIcon>
         <DraftsIcon/>
       </ListItemIcon>
-      <ListItemText primary="Contact Me" />
+      <ListItemText primary="Contact Us" />
     </ListItem>
     </a>
   </div>

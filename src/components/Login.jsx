@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import PaperSheet from 'components/Paper';
 import { withRouter } from 'react-router-dom';
+import TemporaryDrawer from 'components/TemporaryDrawer'
 
 class Login extends Component {
 
@@ -23,6 +24,8 @@ class Login extends Component {
 render() {
   const { history } = this.props
     return (
+      <React.Fragment>
+        <TemporaryDrawer/>
         <MuiThemeProvider>
           <PaperSheet>
             <TextField
@@ -37,13 +40,14 @@ render() {
                 hintText="Enter your Password"
                 floatingLabelText="Password"
                 onChange = {(event,newValue) => this.setState({password:newValue})}
-                style={{alignSelf: 'center'}}
+                style={{alignSelf: 'center', position: 'relative', bottom: '10px'}}
                 />
                 <br/>
                 <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
                 <RaisedButton label="Register" primary={true} style={style} onClick={(event) => history.push("/register")}/>
             </PaperSheet>
          </MuiThemeProvider>
+         </React.Fragment>
     );
   }
 }

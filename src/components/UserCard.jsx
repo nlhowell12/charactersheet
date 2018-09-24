@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -7,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import { logout } from 'actions'
+import { withRouter } from 'react-router-dom';
+
 
 const styles = {
   card: {
@@ -26,41 +29,48 @@ const styles = {
   },
 };
 
-function SimpleCard(props) {
-  const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
+class UserCard extends Component {
 
+  logout = () => {
+    const { dispatch, history } = this.props
+    dispatch(logout())
+    history.push('/')
+  }
+  render() {
+    const { classes, username, campaigns } = this.props;
   return (
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary">
-          Word of the Day
+          {username ? 'Log In Successful!' : "You are not logged in."}
         </Typography>
         <Typography variant="headline" component="h2">
-          be
-          {bull}
-          nev
-          {bull}o{bull}
-          lent
+          {username}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          adjective
+          {username ? "Active Campaigns" : null}
         </Typography>
-        <Typography component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        {username ? campaigns.map(campaign => {
+          return <Typography key={campaign.campaignName}>{`${campaign.campaignName} (${campaign.system})`}</Typography>
+        }) : null}
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        {username ? <Button size="small" onClick={evt => this.logout()}>Logout</Button> : null}
       </CardActions>
     </Card>
   );
 }
+}
 
-SimpleCard.propTypes = {
+UserCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect()(withStyles(styles)(SimpleCard));
+const mapStateToProps = (state) => {
+  return {
+    username: state.user.username,
+    campaigns: state.user.campaigns
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(withStyles(styles)(UserCard)));

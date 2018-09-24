@@ -4,10 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import SimpleCard from './SimpleCard.jsx'
-import { mailFolderListItems, otherMailFolderListItems } from './drawerTileData.jsx';
+import UserCard from 'components/UserCard'
+import { mailFolderListItems, otherMailFolderListItems } from 'components/drawerTileData';
 import { connect } from 'react-redux'
-import { drawerToggle } from '../actions';
+import { drawerToggle } from 'actions';
 
 const styles = {
   list: {
@@ -26,12 +26,12 @@ class TemporaryDrawer extends React.Component {
   };
 
   render() {
-    const { classes, left, dispatch } = this.props;
+    const { classes, left, dispatch, username } = this.props;
 
     const sideList = (
       <div className={classes.list}>
-        <SimpleCard></SimpleCard>
-        <List>{mailFolderListItems}</List>
+        <UserCard/>
+        {username ? <List>{mailFolderListItems}</List> : null}
         <Divider />
         <List>{otherMailFolderListItems}</List>
       </div>
@@ -58,7 +58,8 @@ TemporaryDrawer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        left: state.ui.leftNav
+        left: state.ui.leftNav,
+        username: state.user.username
     }
 }
 export default connect(mapStateToProps)(withStyles(styles)(TemporaryDrawer));

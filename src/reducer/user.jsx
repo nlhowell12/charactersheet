@@ -1,4 +1,4 @@
-import { LOGIN, ADD_CHARACTER, CHANGE_USER_LEVEL } from 'actions';
+import { LOGIN, LOGOUT, ADD_CHARACTER, CHANGE_USER_LEVEL } from 'actions';
 
 const testCampaigns = [
     {
@@ -8,7 +8,14 @@ const testCampaigns = [
             'robcgabbard',
             'ajestes07'
         ],
-        DM: 'ajestes07'
+        DM: 'ajestes07',
+        system: '3.5e',
+        characters: [
+            {
+                name: "Kyrin",
+                player: "Nick"
+            }
+        ]
     },
     {
         campaignName: 'Fimbulwinter',
@@ -16,20 +23,26 @@ const testCampaigns = [
             'nlhowell12',
             'siderybo'
         ],
-        DM: 'mjmoore'
+        DM: 'mjmoore',
+        system: '5e',
+        characters: [
+
+        ]
     }
 ]
 
 export const userState = {
-    username: '',
+    username: 'nlhowell12',
     campaigns: testCampaigns,
-    email: ''
+    email: 'nlhowell12@gmail.com'
 }
 
 export default (state = userState, action) => {
     switch(action.type) {
         case LOGIN:
             return state
+        case LOGOUT:
+            return {...state, username: ''}
         case ADD_CHARACTER:
             return state
         case CHANGE_USER_LEVEL:
