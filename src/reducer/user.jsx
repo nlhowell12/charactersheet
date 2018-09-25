@@ -13,8 +13,9 @@ const testCampaigns = [
         characters: [
             {
                 name: "Kyrin",
-                player: "Nick"
-            }
+                player: "Nick",
+                img: 'https://drive.google.com/uc?id=1hzLZRJuD_ICLwlFAI0fdhvIgWvHMwiie'
+            },
         ]
     },
     {
@@ -26,6 +27,11 @@ const testCampaigns = [
         DM: 'mjmoore',
         system: '5e',
         characters: [
+            {
+                name: "Eskerion",
+                player: "Nick",
+                img: 'https://drive.google.com/uc?id=1oXDTT4Q7KDDBbcgoWiH_J5XeMd6eyo0i'
+            },
 
         ]
     }

@@ -13,7 +13,12 @@ class Home extends Component {
             <React.Fragment>
                 <TemporaryDrawer/>
                 {campaigns.map(campaign => {
-                    return <GridList name={campaign.campaignName} characters={campaign.characters}/>
+                    return <GridList key={campaign.campaignName} 
+                    name={campaign.campaignName} 
+                    characters={campaign.characters}
+                    system={campaign.system}
+                    DM={campaign.DM}
+                    />
                 })}
             </React.Fragment>
         )
