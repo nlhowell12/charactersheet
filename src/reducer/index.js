@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-import ui from 'reducer/ui'
-import user from 'reducer/user'
+import ui from 'reducer/ui';
+import user from 'reducer/user';
+import newChar from 'reducer/newChar'
 
 export default combineReducers({
     ui,
     user,
-    form: formReducer
+    newChar,
 })
 
     

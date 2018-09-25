@@ -5,9 +5,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import PaperSheet from 'components/Paper'
+import PaperSheet from 'components/CampaignDisplayWrapper'
+import TriggersTooltips from 'components/Tooltip'
 
 const styles = theme => ({
   root: {
@@ -19,7 +18,7 @@ const styles = theme => ({
     height: '200px',
     width: '95%'
   },
-  gridList: {
+  GridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
@@ -57,10 +56,10 @@ class SingleLineGridList extends Component {
   return (
     <PaperSheet style={{width: '900px', margin: 'auto'}}>
     <div className={classes.root}>
-      <GridList className={classes.gridList} cols={2.5}>
-        <GridListTile key="Subheader" cols={2} style={{ width: '200px'}}>
-          <ListSubheader component="div" style={{width: '200px'}}>{`${name} (${system})`}</ListSubheader>
-          <ListSubheader component="div" style={{width: '200px'}}>{`DM: ${DM}`}</ListSubheader>
+      <GridList className={classes.GridList} cols={2.5}>
+        <GridListTile key="Subheader" cols={2} style={{ width: '250px'}}>
+          <ListSubheader component="div" style={{width: '250px'}}>{`${name} (${system})`}</ListSubheader>
+          <ListSubheader component="div" style={{width: '250px'}}>{`DM: ${DM}`}</ListSubheader>
         </GridListTile>
         {characters.map(character => (
           <GridListTile key={character.name} style={{width: '180px', height: '200px', paddingTop: '10px', paddingBottom: '10px'}}>
@@ -72,9 +71,7 @@ class SingleLineGridList extends Component {
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton>
-                  <InfoIcon className={classes.title} />
-                </IconButton>
+                <TriggersTooltips characterInfo={character}/>
               }
             />
           </GridListTile>

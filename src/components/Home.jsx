@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import TemporaryDrawer from 'components/TemporaryDrawer'
-import GridList from 'components/GridList'
+import GridList from 'components/CampaignDisplay'
 
 
 

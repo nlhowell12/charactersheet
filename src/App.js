@@ -4,6 +4,7 @@ import ButtonAppBar from 'components/ButtonAppBar';
 import Login from 'components/Login'
 import Register from 'components/Register'
 import Home from 'components/Home'
+import NewChar from 'components/NewChar'
 import reducer from 'reducer'
 import { createStore } from 'redux';
 import {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route exact path="/" component={Login}/>
             <Route path="/register" component={Register}/>
             <Route path="/home" component={Home}/>
+            <Route path="/create" component={NewChar}/>
           </Switch>
         </Router>
       </div>

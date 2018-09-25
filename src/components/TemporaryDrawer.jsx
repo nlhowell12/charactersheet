@@ -5,9 +5,13 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import UserCard from 'components/UserCard'
-import { mailFolderListItems, otherMailFolderListItems } from 'components/drawerTileData';
 import { connect } from 'react-redux'
 import { drawerToggle } from 'actions';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import { withRouter } from 'react-router-dom'
 
 const styles = {
   list: {
@@ -26,14 +30,38 @@ class TemporaryDrawer extends React.Component {
   };
 
   render() {
-    const { classes, left, dispatch, username } = this.props;
+    const { classes, left, dispatch, username, history } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <UserCard/>
-        {username ? <List>{mailFolderListItems}</List> : null}
+        {/* Displays sidebar if there is a username in state */}
+        {username ? 
+        <List>
+          <ListItem button onClick={() => history.push('/newChar')}>
+          <ListItemText primary="Create New Character" />
+          </ListItem>
+          <ListItem button >
+          <ListItemText primary="Spells/Powers" />
+          </ListItem>
+          <ListItem button >
+          <ListItemText primary="Equipment" />
+          </ListItem>
+          <ListItem button >
+          <ListItemText primary="Feats" />
+          </ListItem>
+        </List> : null}
         <Divider />
-        <List>{otherMailFolderListItems}</List>
+        <List>
+        <a href="mailto:nlhowell12@gmail.com,robcgabbard@gmail.com?subject=Issue with Character Sheet" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
+          <ListItem button>
+            <ListItemIcon>
+              <DraftsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Contact Us" />
+          </ListItem>
+        </a>
+        </List>
       </div>
     );
 
@@ -62,4 +90,4 @@ const mapStateToProps = (state) => {
         username: state.user.username
     }
 }
-export default connect(mapStateToProps)(withStyles(styles)(TemporaryDrawer));
+export default connect(mapStateToProps)(withRouter(withStyles(styles)(TemporaryDrawer)));

@@ -7,8 +7,7 @@ export const uiState = {
 export default (state = uiState, action) => {
     switch(action.type) {
         case DRAWER_TOGGLE:
-            let toggleState = {...state, leftNav: !state.leftNav}
-            return toggleState;
+            return {...state, leftNav: !state.leftNav};
         default:
             return state;
     }

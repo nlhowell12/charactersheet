@@ -9,12 +9,14 @@ const testCampaigns = [
             'ajestes07'
         ],
         DM: 'ajestes07',
-        system: '3.5e',
+        system: 'D&D Rhedrah',
         characters: [
             {
                 name: "Kyrin",
                 player: "Nick",
-                img: 'https://drive.google.com/uc?id=1hzLZRJuD_ICLwlFAI0fdhvIgWvHMwiie'
+                img: 'https://drive.google.com/uc?id=1hzLZRJuD_ICLwlFAI0fdhvIgWvHMwiie',
+                class: 'Monk',
+                level: 13
             },
         ]
     },
@@ -30,7 +32,9 @@ const testCampaigns = [
             {
                 name: "Eskerion",
                 player: "Nick",
-                img: 'https://drive.google.com/uc?id=1oXDTT4Q7KDDBbcgoWiH_J5XeMd6eyo0i'
+                img: 'https://drive.google.com/uc?id=1oXDTT4Q7KDDBbcgoWiH_J5XeMd6eyo0i',
+                class: 'Blood Hunter',
+                level: 11
             },
 
         ]

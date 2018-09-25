@@ -1,9 +1,9 @@
-
+import { CHANGE_ATTRIBUTE } from 'actions'
+import * as R from 'ramda'
 
 const newCharState = {
     name: '',
     player: '',
-    world: '',
     classes: [],
     race: '',
     deity: '',
@@ -65,6 +65,9 @@ const newCharState = {
 
 export default (state = newCharState, action) => {
     switch(action.type) {
+        case CHANGE_ATTRIBUTE: 
+            let value = Number(action.value)
+            return R.set(R.lensPath(['attributes', action.attribute]), value, state)
         default:
             return state
     }
