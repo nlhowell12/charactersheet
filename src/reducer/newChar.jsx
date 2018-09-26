@@ -1,16 +1,19 @@
 import { CHANGE_ATTRIBUTE } from 'actions'
 import * as R from 'ramda'
+import { CHANGE_DETAIL, CHANGE_TOP_LEVEL } from '../actions/actions';
 
 const newCharState = {
-    name: '',
     player: '',
     classes: [],
     race: '',
     deity: '',
-    age: '',
-    eyes: '',
-    hair: '',
-    skin: '',
+    details: {
+        name: '',
+        age: '',
+        eyes: '',
+        hair: '',
+        skin: '',
+    },
     attributes: {
         strength: 0,
         dexterity: 0,
@@ -68,6 +71,10 @@ export default (state = newCharState, action) => {
         case CHANGE_ATTRIBUTE: 
             let value = Number(action.value)
             return R.set(R.lensPath(['attributes', action.attribute]), value, state)
+        case CHANGE_DETAIL:
+            return R.set(R.lensPath(['details', action.detail]), action.value, state)
+        case CHANGE_TOP_LEVEL:
+            return R.set(R.lensPath([action.change]), action.value, state)
         default:
             return state
     }

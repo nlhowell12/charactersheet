@@ -6,7 +6,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import PaperSheet from 'components/CampaignDisplayWrapper'
-import TriggersTooltips from 'components/Tooltip'
+import TriggersTooltips from 'components/CharacterTooltip'
 
 const styles = theme => ({
   root: {
