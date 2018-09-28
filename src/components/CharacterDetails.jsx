@@ -10,7 +10,7 @@ class CharacterDetails extends Component {
     render() {
         const { details, race, deity } = this.props
         return (
-            <Paper style={{display: 'flex', flexWrap: 'wrap', position: 'absolute', top: '72px', left: '225px', width: '750px'}}>
+            <Paper style={{display: 'flex', flexWrap: 'wrap', height: '200px', width: '750px'}}>
                 {Object.keys(details).map(detail => {
                     return <TextFields key={detail} detail={detail}/>
                 })}

@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import OutlinedTextFields from 'components/AttributeField';
 import { connect } from 'react-redux';
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
+
+const AttributeContainer = styled(Paper)`
+    width: 150px;
+`
 
 class Attributes extends Component {
     render() {
         const { attributes } = this.props
         return (
-            <Paper style={{width: '150px', position: 'relative', left: '10px', top: '20px'}}>
+            <AttributeContainer>
                 {Object.keys(attributes).map(attribute => {
                     return (
                     <Paper key={attribute} style={{display: 'flex', flexDirection: 'row'}}>
@@ -21,7 +26,7 @@ class Attributes extends Component {
                     </Paper>
                     )
                 })}
-            </Paper>
+            </AttributeContainer>
         )
     }
 }

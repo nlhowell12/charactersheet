@@ -90,7 +90,7 @@ class SimpleDialogDemo extends React.Component {
 
   render() {
     return (
-      <Paper style={{width: '200px', position: 'relative', top: '10px', left:'10px'}}>
+      <Paper style={{width: '200px', height: '70px'}}>
         <Typography variant="subheading" style={{textAlign: 'center', position: 'relative', top: '10px'}}>Selected: {this.state.selectedValue}</Typography>
         <br />
         <Button onClick={this.handleClickOpen}>Change Game System</Button>
