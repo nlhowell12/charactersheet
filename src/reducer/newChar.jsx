@@ -221,7 +221,7 @@ export default (state = newCharState, action) => {
             } else {
                 skillPath = ['skills', action.skill, 'ranks']
             }
-            return (R.set(R.lensPath(skillPath), action.rank, state))
+            return (R.set(R.lensPath(skillPath), Number(action.rank), state))
         default:
             return state
     }
