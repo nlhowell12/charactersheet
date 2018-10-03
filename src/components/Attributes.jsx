@@ -6,7 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
 const AttributeContainer = styled(Paper)`
-    width: 150px;
+    width: 100%;
+    margin-top: 5px;
+    margin-right: 5px;
 `
 
 class Attributes extends Component {

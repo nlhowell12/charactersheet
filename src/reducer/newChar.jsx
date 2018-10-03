@@ -1,4 +1,4 @@
-import { CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK } from 'actions'
+import { CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC } from 'actions'
 import * as R from 'ramda'
 
 const newCharState = {
@@ -25,32 +25,44 @@ const newCharState = {
     skills: {
         acrobatics: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'dexterity'
         },
         artifice: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'intelligence'
         },
         autohypnosis: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'wisdom'
         },
         bluff: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'charisma'
         },
         climb: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'strength'
         },
         concentration: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'constitution'
         },
         craft: {
@@ -59,97 +71,139 @@ const newCharState = {
         'decipher script': {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'intelligence'
         },
         diplomacy: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'charisma'
         },
         disguise: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'charisma'
         },
         'escape artist': {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'dexterity'
         },
         forgery: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'intelligence'
         },
         'handle animal': {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'wisdom'
         },
         heal: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'wisdom'
         },
         intimidate: {
             ranks: 0,
             total: 0,
+            misc: 0,
+            syn: 0,
             att: 'charisma'
         },
         knowledge: {
             att: 'intelligence',
             arcana: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             'architecture & engineering': {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             dungeoneering: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             history: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             local: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             nature: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             'nobility & royalty': {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             psionics: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             'military & tactics': {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             religion: {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
             'the planes': {
                 ranks: 0,
+                misc: 0,
+                syn: 0,
                 total: 0,
             },
     },
         magecraft: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'intelligence'
         },
         perception: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'wisdom'
         },
@@ -161,37 +215,51 @@ const newCharState = {
         },
         ride: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'dexterity'
         },
         'sense motive': {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'wisdom'
         },
         'sleight of hand': {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'dexterity'
         },
         'speak language': [],
         stealth: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'dexterity'
         },
         survival: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'wisdom'
         },
         swim: {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'strength'
         },
         'use rope': {
             ranks: 0,
+            misc: 0,
+            syn: 0,
             total: 0,
             att: 'dexterity'
         },
@@ -222,6 +290,20 @@ export default (state = newCharState, action) => {
                 skillPath = ['skills', action.skill, 'ranks']
             }
             return (R.set(R.lensPath(skillPath), Number(action.rank), state))
+            case CHANGE_SKILL_MISC:
+            let miscSkillPath = []
+            if (action.skill in state.skills.knowledge) {
+                miscSkillPath = ['skills', 'knowledge', action.skill, 'misc']
+            } else if (action.skill in state.skills.profession) {
+                miscSkillPath = ['skills', 'profession', action.skill, 'misc']
+            } else if (action.skill in state.skills.perform) {
+                miscSkillPath = ['skills', 'perform', action.skill, 'misc']
+            } else if (action.skill in state.skills.craft) {
+                miscSkillPath = ['skills', 'craft', action.skill, 'misc']
+            } else {
+                miscSkillPath = ['skills', action.skill, 'misc']
+            }
+            return (R.set(R.lensPath(miscSkillPath), Number(action.misc), state))
         default:
             return state
     }
