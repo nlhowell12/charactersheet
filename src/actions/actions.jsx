@@ -8,6 +8,7 @@ const CHANGE_DETAIL = 'CHANGE_DETAIL';
 const CHANGE_TOP_LEVEL = 'CHANGE_TOP_LEVEL';
 const CHANGE_SKILL_RANK = 'CHANGE_SKILL_RANK';
 const CHANGE_SKILL_MISC = 'CHANGE_SKILL_MISC';
+const CHANGE_SKILL_TOTAL = 'CHANGE_SKILL_TOTAL'
 
 const drawerToggle = () => {
     return {
@@ -79,6 +80,14 @@ const changeSkillMisc = (skill, misc) => {
     }
 }
 
+const changeSkillTotal = (skill, newTotal) => {
+    return {
+        type: CHANGE_SKILL_TOTAL,
+        newTotal,
+        skill
+    }
+}
+
 export { 
     drawerToggle, 
     login, 
@@ -89,7 +98,8 @@ export {
     changeDetail,
     changeTopLevel,
     changeSkillRank,
-    changeSkillMisc, 
+    changeSkillMisc,
+    changeSkillTotal, 
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -99,5 +109,6 @@ export {
     CHANGE_DETAIL,
     CHANGE_TOP_LEVEL,
     CHANGE_SKILL_RANK,
-    CHANGE_SKILL_MISC, 
+    CHANGE_SKILL_MISC,
+    CHANGE_SKILL_TOTAL, 
 }

@@ -1,4 +1,4 @@
-import { CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC } from 'actions'
+import { CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_SKILL_TOTAL } from 'actions'
 import * as R from 'ramda'
 
 const newCharState = {
@@ -290,7 +290,7 @@ export default (state = newCharState, action) => {
                 skillPath = ['skills', action.skill, 'ranks']
             }
             return (R.set(R.lensPath(skillPath), Number(action.rank), state))
-            case CHANGE_SKILL_MISC:
+        case CHANGE_SKILL_MISC:
             let miscSkillPath = []
             if (action.skill in state.skills.knowledge) {
                 miscSkillPath = ['skills', 'knowledge', action.skill, 'misc']
@@ -304,6 +304,20 @@ export default (state = newCharState, action) => {
                 miscSkillPath = ['skills', action.skill, 'misc']
             }
             return (R.set(R.lensPath(miscSkillPath), Number(action.misc), state))
+        case CHANGE_SKILL_TOTAL:
+            let totalSkillPath = []
+            if (action.skill in state.skills.knowledge) {
+                totalSkillPath = ['skills', 'knowledge', action.skill, 'total']
+            } else if (action.skill in state.skills.profession) {
+                totalSkillPath = ['skills', 'profession', action.skill, 'total']
+            } else if (action.skill in state.skills.perform) {
+                totalSkillPath = ['skills', 'perform', action.skill, 'total']
+            } else if (action.skill in state.skills.craft) {
+                totalSkillPath = ['skills', 'craft', action.skill, 'total']
+            } else {
+                totalSkillPath = ['skills', action.skill, 'total']
+            }
+            return (R.set(R.lensPath(totalSkillPath), Number(action.newTotal), state))
         default:
             return state
     }

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
-import { changeSkillRank, changeSkillMisc } from 'actions';
+import { changeSkillRank, changeSkillMisc, changeSkillTotal } from 'actions';
 
 const SkillInput = styled(TextField)`
     width: 50px; 
@@ -14,14 +14,20 @@ const SkillInput = styled(TextField)`
 
 class Skill extends Component {
 
-    state = {
-        ranks: 0,
-        attBonus: 0,
-        synBonus: 0,
-        miscBonus: 0,
-        total: 0
+    componentDidUpdate = (prevProps) => {
+        const { skill, skills, att, attributes, dispatch } = this.props
+        const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
+        let newTotal = skills[skill].ranks + skills[skill].misc + attMod
+        if (this.props.skills[skill].ranks !== prevProps.skills[skill].ranks) {
+            dispatch(changeSkillTotal(skill, newTotal))
+        }
+        if (this.props.skills[skill].misc !== prevProps.skills[skill].misc) {
+            dispatch(changeSkillTotal(skill, newTotal))
+        }
+        if (this.props.attributes[att] !== prevProps.attributes[att]) {
+            dispatch(changeSkillTotal(skill, newTotal))
+        }
     }
-
     render() {
         const { skill, skills, att, attributes, dispatch } = this.props
         const inputProps = {
@@ -38,7 +44,7 @@ class Skill extends Component {
         return (
             <Paper style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography style={{paddingLeft:'5px', paddingTop: '10px'}}>{skill}</Typography>
-                <div style={{display:'flex', jusitfyContent: 'space-around'}}>
+                <div style={{display:'flex', justifyContent: 'space-around'}}>
                     <SkillInput label="Ranks" value={skills[skill].ranks || ''} InputProps={InputProps} onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}/>
                     <SkillInput label="Att" disabled InputProps={InputProps} value={attMod}/>
                     <SkillInput label="Misc" InputProps={InputProps} onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}/>
