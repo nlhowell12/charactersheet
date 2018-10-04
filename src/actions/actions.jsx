@@ -11,7 +11,8 @@ const CHANGE_SKILL_MISC = 'CHANGE_SKILL_MISC';
 const CHANGE_SKILL_TOTAL = 'CHANGE_SKILL_TOTAL';
 const CLASS_TOGGLE = 'CLASS_TOGGLE';
 const ADD_CLASS = 'ADD_CLASS';
-const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL'
+const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
+const ADJUST_SKILL_POINTS = 'ADJUST_SKILL_POINTS';
 
 const drawerToggle = () => {
     return {
@@ -112,6 +113,14 @@ const changeClassLevel = (playerClass, newLevel) => {
     }
 }
 
+const adjustSkillPoints = (playerClass, skillPoints) => {
+    return {
+        type: ADJUST_SKILL_POINTS,
+        playerClass,
+        skillPoints
+    }
+}
+
 export { 
     drawerToggle, 
     login, 
@@ -127,6 +136,7 @@ export {
     classToggle, 
     addClass,
     changeClassLevel,
+    adjustSkillPoints,
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -141,4 +151,5 @@ export {
     CLASS_TOGGLE,
     ADD_CLASS,
     CHANGE_CLASS_LEVEL,
+    ADJUST_SKILL_POINTS,
 }

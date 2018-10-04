@@ -7,20 +7,22 @@ import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Switch from '@material-ui/core/Switch';
-import { classToggle, addClass, changeClassLevel } from 'actions'
+import { classToggle, addClass, changeClassLevel, adjustSkillPoints } from 'actions'
 import { playerClasses }from 'components/classes';
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import TextField from '@material-ui/core/TextField';
 
 
 const ClassWrapper = styled(Paper)`
-    width: 375px;
+    width: 400px;
     height: 200px;
     overflow: scroll;
 `
 const ClassInput = styled(Paper)`
     width: 100%;
     display: flex;
+    padding-bottom: 5px;
+    justify-content: space-around;
 `
 
 const LevelInput = styled(TextField)`
@@ -31,12 +33,10 @@ const LevelInput = styled(TextField)`
 
 class ClassContainer extends Component {
 
-    state = {
-
-    }
+    state = {}
 
     componentDidMount = () => {
-        playerClasses.map(playerClass => {
+        Object.keys(playerClasses).map(playerClass => {
             return this.setState({
                     ...this.state,
                     [playerClass]: false
@@ -48,13 +48,33 @@ class ClassContainer extends Component {
         const { dispatch } = this.props;
         this.setState({
             ...this.state,
-            [playerClass]: !this.state[playerClass]
+            [playerClass]: !this.state[playerClass],
         })
         dispatch(addClass(playerClass))
     }
 
+    handleLevelChange = (playerClass, newLevel) => {
+        const { dispatch } = this.props;
+        dispatch(changeClassLevel(playerClass, newLevel))
+        this.handleSkillPoints(playerClass, newLevel)
+    }
+
+    handleSkillPoints = (playerClass, newLevel) => {
+        const { dispatch, attributes } = this.props;
+        const intMod = attributes.intelligence > 10 ? Math.floor((attributes.intelligence - 10)/2) : Math.floor((attributes.intelligence - 10)/2)
+        let skillPoints = (playerClasses[playerClass].skillPoints + intMod) * newLevel
+        dispatch(adjustSkillPoints(playerClass, skillPoints))
+    }
+
     render() {
         const { classes, open, dispatch } = this.props;
+        const InputProps = {
+            inputProps: {
+                style: {
+                    textAlign: 'center'
+                }
+            }
+        }
         return (
             <ClassWrapper>
                 <div style={{display: 'flex', padding: '5px', justifyContent: 'space-between'}}>
@@ -65,7 +85,7 @@ class ClassContainer extends Component {
                 </div>
                 <Dialog open={open} onClose={evt => dispatch(classToggle())}>
                     <DialogTitle>Choose Classes</DialogTitle>
-                    {playerClasses.map(playerClass => {
+                    {Object.keys(playerClasses).map(playerClass => {
                         return (
                             <FormControlLabel
                                 control={<Switch checked={this.state[playerClass]}label={playerClass} key={playerClass + 'Switch'} value={playerClass} onChange={evt => this.switchToggle(playerClass)}/>}
@@ -79,15 +99,32 @@ class ClassContainer extends Component {
                 {Object.keys(classes).map(playerClass => {
                     return (
                     <ClassInput key={playerClass + 'input'}>
-                        <div style={{width: '300px'}}>
-                        <Typography style={{marginLeft: '10px'}} align='justify'>{playerClass}</Typography>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Typography style={{marginLeft: '10px', fontSize: '20px'}} align='justify'>{playerClass}</Typography>
                         </div>
+                        <div style={{display: 'flex', justifyContent: 'space-between', justifySelf: 'flex-end', width: '200px'}}>
+                        <LevelInput 
+                            label="HitDice" 
+                            value={playerClasses[playerClass].HD || ''} 
+                            style={{position: 'relative', left: '10px'}}
+                            InputProps={InputProps}
+                            disabled
+                        />
+                        <LevelInput 
+                            label="Skills/level" 
+                            value={playerClasses[playerClass].skillPoints || ''} 
+                            style={{position: 'relative', left: '10px'}}
+                            InputProps={InputProps}
+                            disabled
+                        />
                         <LevelInput 
                             label="Level" 
-                            value={classes[playerClass]} 
+                            value={classes[playerClass] || ''} 
                             style={{position: 'relative', left: '10px'}}
-                            onChange={evt => dispatch(changeClassLevel(playerClass, evt.target.value))}
+                            InputProps={InputProps}
+                            onChange={evt => this.handleLevelChange(playerClass, evt.target.value)}
                         />
+                        </div>
                     </ClassInput>
                     )
                 })}  
@@ -100,7 +137,9 @@ class ClassContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         classes: state.newChar.classes,
-        open: state.ui.classDialog
+        open: state.ui.classDialog,
+        skillPoints: state.newChar.skillPoints,
+        attributes: state.newChar.attributes
     }
 }
 export default connect(mapStateToProps)(ClassContainer)
