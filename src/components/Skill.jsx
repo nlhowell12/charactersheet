@@ -14,6 +14,13 @@ const SkillInput = styled(TextField)`
 
 class Skill extends Component {
 
+    componentDidMount = () => {
+        const { skill, skills, att, attributes, dispatch } = this.props
+        const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
+        let newTotal = skills[skill].ranks + skills[skill].misc + attMod
+        dispatch(changeSkillTotal(skill, newTotal))
+    }
+
     componentDidUpdate = (prevProps) => {
         const { skill, skills, att, attributes, dispatch } = this.props
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
@@ -49,7 +56,6 @@ class Skill extends Component {
                     <SkillInput label="Att" disabled InputProps={InputProps} value={attMod}/>
                     <SkillInput label="Misc" InputProps={InputProps} onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}/>
                     <SkillInput label="Total" disabled InputProps={InputProps} value={skills[skill].total || ''}/>
-        
                 </div>
             </Paper>
         )
