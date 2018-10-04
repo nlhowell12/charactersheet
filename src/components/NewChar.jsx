@@ -5,6 +5,7 @@ import Attributes from 'components/Attributes';
 import CharacterDetails from 'components/CharacterDetails';
 import styled from 'styled-components';
 import Skills from 'components/Skills'
+import ClassContainer from 'components/ClassContainer';
 
 const NewCharContainer = styled.div`
     display: flex;
@@ -21,7 +22,11 @@ class NewChar extends Component {
                     <SimpleDialogDemo/>
                     <Attributes/>
                 </div>
-                <CharacterDetails/>
+                <div>
+                    <CharacterDetails/>
+                    <br/>
+                    <ClassContainer/>
+                </div>
                 <Skills/>
             </NewCharContainer>
         )

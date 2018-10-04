@@ -1,9 +1,9 @@
-import { CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_SKILL_TOTAL } from 'actions'
+import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_SKILL_TOTAL, ADD_CLASS } from 'actions'
 import * as R from 'ramda'
 
 const newCharState = {
     player: '',
-    classes: [],
+    classes: {},
     race: '',
     deity: '',
     skillPoints: 123,
@@ -318,6 +318,14 @@ export default (state = newCharState, action) => {
                 totalSkillPath = ['skills', action.skill, 'total']
             }
             return (R.set(R.lensPath(totalSkillPath), Number(action.newTotal), state))
+        case ADD_CLASS:
+            if (action.newClass in state.classes) {
+                return R.set(R.lensPath(['classes']), R.dissoc(action.newClass, state.classes), state)
+            } else {
+                return R.set(R.lensPath(['classes']), R.assoc(action.newClass, 0, state.classes), state)
+            }
+        case CHANGE_CLASS_LEVEL:
+            return R.set(R.lensPath(['classes', action.playerClass]), action.newLevel, state)
         default:
             return state
     }
