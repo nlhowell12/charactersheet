@@ -4,6 +4,7 @@ import * as R from 'ramda'
 const newCharState = {
     player: '',
     classes: {},
+    xp: 0,
     race: '',
     deity: '',
     skillPoints: {

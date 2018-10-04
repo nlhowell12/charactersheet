@@ -46,6 +46,14 @@ class ClassContainer extends Component {
         })
     }
 
+    componentDidUpdate = (prevProps) => {
+        const { attributes, classes } = this.props
+        if (attributes.intelligence !== prevProps.attributes.intelligence) {
+            Object.keys(classes).map(playerClass => {
+                this.handleSkillPoints(playerClass, classes[playerClass].level)
+            })
+        }
+    }
     switchToggle = (playerClass) => {
         const { dispatch } = this.props;
         this.setState({
