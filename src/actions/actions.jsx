@@ -13,6 +13,7 @@ const CLASS_TOGGLE = 'CLASS_TOGGLE';
 const ADD_CLASS = 'ADD_CLASS';
 const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
 const ADJUST_SKILL_POINTS = 'ADJUST_SKILL_POINTS';
+const SELECT_FIRST_LEVEL_CLASS = 'SELECT_FIRST_LEVEL_CLASS';
 
 const drawerToggle = () => {
     return {
@@ -121,6 +122,13 @@ const adjustSkillPoints = (playerClass, skillPoints) => {
     }
 }
 
+const selectFirstLevelClass = (playerClass) => {
+    return {
+        type: SELECT_FIRST_LEVEL_CLASS,
+        playerClass
+    }
+}
+
 export { 
     drawerToggle, 
     login, 
@@ -137,6 +145,7 @@ export {
     addClass,
     changeClassLevel,
     adjustSkillPoints,
+    selectFirstLevelClass,
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -152,4 +161,5 @@ export {
     ADD_CLASS,
     CHANGE_CLASS_LEVEL,
     ADJUST_SKILL_POINTS,
+    SELECT_FIRST_LEVEL_CLASS,
 }
