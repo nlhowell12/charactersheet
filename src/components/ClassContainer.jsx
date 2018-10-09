@@ -48,11 +48,14 @@ class ClassContainer extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        const { attributes, classes } = this.props
+        const { attributes, classes, skillPoints, dispatch } = this.props
         if (attributes.intelligence !== prevProps.attributes.intelligence) {
             Object.keys(classes).map(playerClass => {
                 return this.handleSkillPoints(playerClass, classes[playerClass].level)
             })
+        }
+        if (R.sum(R.values(skillPoints.classes)) !== R.sum(R.values(prevProps.skillPoints.classes))) {
+            dispatch(changeOverallSkillTotal(R.sum(R.values(skillPoints.classes))))
         }
     }
     switchToggle = (playerClass) => {
@@ -89,14 +92,13 @@ class ClassContainer extends Component {
     }
 
     handleSkillPoints = (playerClass, newLevel) => {
-        const { dispatch, attributes, skillPoints } = this.props;
+        const { dispatch, attributes } = this.props;
         const intMod = attributes.intelligence > 10 ? Math.floor((attributes.intelligence - 10)/2) : Math.floor((attributes.intelligence - 10)/2)
         let classSkillPoints = (playerClasses[playerClass].skillPoints + intMod) * newLevel
         if (playerClass === this.state.first) {
             classSkillPoints = ((playerClasses[playerClass].skillPoints + intMod) * (newLevel - 1)) + ((playerClasses[playerClass].skillPoints + intMod) * 4)
         } 
         dispatch(adjustSkillPoints(playerClass, classSkillPoints))
-        dispatch(changeOverallSkillTotal(R.sum(R.values(skillPoints.classes))))
     }
 
     render() {
