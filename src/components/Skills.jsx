@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Skill from 'components/Skill';
 import Typography from '@material-ui/core/Typography'
-import * as R from 'ramda';
 
 const SkillsContainer = styled(Paper)`
     width: 400px;
@@ -29,7 +28,7 @@ class Skills extends Component {
     render() {
         const { skills, skillPoints } = this.props;
         const nestedSkills = ['knowledge', 'profession', 'perform', 'craft', 'speak language']
-        const skillPointTotal = R.sum(R.values(skillPoints.classes))
+        const skillPointTotal = skillPoints.total;
         return (
             <SkillsContainer>
                 <SkillHeader>

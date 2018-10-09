@@ -8,7 +8,8 @@ const CHANGE_DETAIL = 'CHANGE_DETAIL';
 const CHANGE_TOP_LEVEL = 'CHANGE_TOP_LEVEL';
 const CHANGE_SKILL_RANK = 'CHANGE_SKILL_RANK';
 const CHANGE_SKILL_MISC = 'CHANGE_SKILL_MISC';
-const CHANGE_SKILL_TOTAL = 'CHANGE_SKILL_TOTAL';
+const CHANGE_INDIVIDUAL_SKILL_TOTAL = 'CHANGE_INDIVIDUAL_SKILL_TOTAL';
+const CHANGE_OVERALL_SKILL_TOTAL = 'CHANGE_OVERALL_SKILL_TOTAL';
 const CLASS_TOGGLE = 'CLASS_TOGGLE';
 const ADD_CLASS = 'ADD_CLASS';
 const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
@@ -92,11 +93,18 @@ const changeSkillMisc = (skill, misc) => {
     }
 }
 
-const changeSkillTotal = (skill, newTotal) => {
+const changeIndividualSkillTotal = (skill, newTotal) => {
     return {
-        type: CHANGE_SKILL_TOTAL,
+        type: CHANGE_INDIVIDUAL_SKILL_TOTAL,
         newTotal,
         skill
+    }
+}
+
+const changeOverallSkillTotal = (newTotal) => {
+    return {
+        type: CHANGE_OVERALL_SKILL_TOTAL,
+        newTotal
     }
 }
 
@@ -147,7 +155,8 @@ export {
     changeTopLevel,
     changeSkillRank,
     changeSkillMisc,
-    changeSkillTotal,
+    changeIndividualSkillTotal,
+    changeOverallSkillTotal,
     classToggle, 
     addClass,
     changeClassLevel,
@@ -164,7 +173,8 @@ export {
     CHANGE_TOP_LEVEL,
     CHANGE_SKILL_RANK,
     CHANGE_SKILL_MISC,
-    CHANGE_SKILL_TOTAL,
+    CHANGE_INDIVIDUAL_SKILL_TOTAL,
+    CHANGE_OVERALL_SKILL_TOTAL,
     CLASS_TOGGLE,
     ADD_CLASS,
     CHANGE_CLASS_LEVEL,

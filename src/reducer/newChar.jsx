@@ -1,5 +1,6 @@
-import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_SKILL_TOTAL, ADD_CLASS, ADJUST_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_SKILL_POINTS } from 'actions'
+import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_INDIVIDUAL_SKILL_TOTAL, ADD_CLASS, ADJUST_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_SKILL_POINTS } from 'actions'
 import * as R from 'ramda'
+import { CHANGE_OVERALL_SKILL_TOTAL } from '../actions/actions';
 
 const newCharState = {
     player: '',
@@ -310,7 +311,7 @@ export default (state = newCharState, action) => {
                 miscSkillPath = ['skills', action.skill, 'misc']
             }
             return (R.set(R.lensPath(miscSkillPath), Number(action.misc), state))
-        case CHANGE_SKILL_TOTAL:
+        case CHANGE_INDIVIDUAL_SKILL_TOTAL:
             let totalSkillPath = []
             if (action.skill in state.skills.knowledge) {
                 totalSkillPath = ['skills', 'knowledge', action.skill, 'total']
@@ -324,6 +325,8 @@ export default (state = newCharState, action) => {
                 totalSkillPath = ['skills', action.skill, 'total']
             }
             return (R.set(R.lensPath(totalSkillPath), Number(action.newTotal), state))
+        case CHANGE_OVERALL_SKILL_TOTAL:
+            return R.set(R.lensPath(['skillPoints', 'total']), action.newTotal, state)
         case ADD_CLASS:
             if (action.newClass in state.classes) {
                 return R.set(R.lensPath(['classes']), R.dissoc(action.newClass, state.classes), state)

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
-import { changeSkillRank, changeSkillMisc, changeSkillTotal } from 'actions';
+import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal } from 'actions';
 
 const SkillInput = styled(TextField)`
     width: 50px; 
@@ -18,7 +18,7 @@ class Skill extends Component {
         const { skill, skills, att, attributes, dispatch } = this.props
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
         let newTotal = skills[skill].ranks + skills[skill].misc + attMod
-        dispatch(changeSkillTotal(skill, newTotal))
+        dispatch(changeIndividualSkillTotal(skill, newTotal))
     }
 
     componentDidUpdate = (prevProps) => {
@@ -26,13 +26,13 @@ class Skill extends Component {
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
         let newTotal = skills[skill].ranks + skills[skill].misc + attMod
         if (this.props.skills[skill].ranks !== prevProps.skills[skill].ranks) {
-            dispatch(changeSkillTotal(skill, newTotal))
+            dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
         if (this.props.skills[skill].misc !== prevProps.skills[skill].misc) {
-            dispatch(changeSkillTotal(skill, newTotal))
+            dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
         if (this.props.attributes[att] !== prevProps.attributes[att]) {
-            dispatch(changeSkillTotal(skill, newTotal))
+            dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
     }
     render() {

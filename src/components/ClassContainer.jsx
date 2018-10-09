@@ -7,11 +7,12 @@ import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Switch from '@material-ui/core/Switch';
-import { classToggle, addClass, changeClassLevel, adjustSkillPoints, removeSkillPoints } from 'actions';
+import { classToggle, addClass, changeClassLevel, adjustSkillPoints, removeSkillPoints, changeOverallSkillTotal } from 'actions';
 import { playerClasses }from 'components/classes';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import * as R from 'ramda';
 
 
 const ClassWrapper = styled(Paper)`
@@ -79,7 +80,6 @@ class ClassContainer extends Component {
             first: ''
         }, () => this.handleSkillPoints(playerClass, classes[playerClass].level))
     }
-        
     }
 
     handleLevelChange = (playerClass, newLevel) => {
@@ -89,13 +89,14 @@ class ClassContainer extends Component {
     }
 
     handleSkillPoints = (playerClass, newLevel) => {
-        const { dispatch, attributes } = this.props;
+        const { dispatch, attributes, skillPoints } = this.props;
         const intMod = attributes.intelligence > 10 ? Math.floor((attributes.intelligence - 10)/2) : Math.floor((attributes.intelligence - 10)/2)
-        let skillPoints = (playerClasses[playerClass].skillPoints + intMod) * newLevel
+        let classSkillPoints = (playerClasses[playerClass].skillPoints + intMod) * newLevel
         if (playerClass === this.state.first) {
-            skillPoints = ((playerClasses[playerClass].skillPoints + intMod) * (newLevel - 1)) + ((playerClasses[playerClass].skillPoints + intMod) * 4)
+            classSkillPoints = ((playerClasses[playerClass].skillPoints + intMod) * (newLevel - 1)) + ((playerClasses[playerClass].skillPoints + intMod) * 4)
         } 
-        dispatch(adjustSkillPoints(playerClass, skillPoints))
+        dispatch(adjustSkillPoints(playerClass, classSkillPoints))
+        dispatch(changeOverallSkillTotal(R.sum(R.values(skillPoints.classes))))
     }
 
     render() {
