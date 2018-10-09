@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Switch from '@material-ui/core/Switch';
-import { classToggle, addClass, changeClassLevel, adjustSkillPoints, selectFirstLevelClass } from 'actions';
+import { classToggle, addClass, changeClassLevel, adjustSkillPoints, removeSkillPoints } from 'actions';
 import { playerClasses }from 'components/classes';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
@@ -50,33 +50,36 @@ class ClassContainer extends Component {
         const { attributes, classes } = this.props
         if (attributes.intelligence !== prevProps.attributes.intelligence) {
             Object.keys(classes).map(playerClass => {
-                this.handleSkillPoints(playerClass, classes[playerClass].level)
+                return this.handleSkillPoints(playerClass, classes[playerClass].level)
             })
         }
     }
     switchToggle = (playerClass) => {
-        const { dispatch } = this.props;
+        const { dispatch, classes } = this.props;
         this.setState({
             ...this.state,
             [playerClass]: !this.state[playerClass],
         })
         dispatch(addClass(playerClass))
+        if (Object.keys(classes).indexOf(playerClass) > 0) {
+            dispatch(removeSkillPoints(playerClass))
+        }
     }
 
     handleCheck = (playerClass) => {
-        const { dispatch } = this.props;
-        if (this.state.first) {
+        const { classes } = this.props;
+        if (!this.state.first) {
             this.setState({
                 ...this.state,
-                first: ''
-            })
+                first: playerClass
+            }, () => this.handleSkillPoints(playerClass, classes[playerClass].level))
         } else {
         this.setState({
             ...this.state,
-            first: playerClass
-        })
+            first: ''
+        }, () => this.handleSkillPoints(playerClass, classes[playerClass].level))
     }
-        dispatch(selectFirstLevelClass(playerClass))
+        
     }
 
     handleLevelChange = (playerClass, newLevel) => {
@@ -86,10 +89,10 @@ class ClassContainer extends Component {
     }
 
     handleSkillPoints = (playerClass, newLevel) => {
-        const { dispatch, attributes, classes } = this.props;
+        const { dispatch, attributes } = this.props;
         const intMod = attributes.intelligence > 10 ? Math.floor((attributes.intelligence - 10)/2) : Math.floor((attributes.intelligence - 10)/2)
         let skillPoints = (playerClasses[playerClass].skillPoints + intMod) * newLevel
-        if (classes[playerClass].first) {
+        if (playerClass === this.state.first) {
             skillPoints = ((playerClasses[playerClass].skillPoints + intMod) * (newLevel - 1)) + ((playerClasses[playerClass].skillPoints + intMod) * 4)
         } 
         dispatch(adjustSkillPoints(playerClass, skillPoints))
