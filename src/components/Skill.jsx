@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
-import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal, useClassSkillPoints } from 'actions';
+import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal, setSkillCost } from 'actions';
 import { playerClasses } from 'components/classes'
 
 const SkillInput = styled(TextField)`
@@ -30,7 +30,7 @@ class Skill extends Component {
         const { skill, skills, att, attributes, dispatch, classes } = this.props
         const { classSkillClasses } = this.state;
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
-        let newTotal = skills[skill].ranks + skills[skill].misc + attMod
+        let newTotal = skills[skill].ranks + skills[skill].misc + attMod;
         if (skills[skill].ranks !== prevProps.skills[skill].ranks) {
             dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
@@ -55,13 +55,8 @@ class Skill extends Component {
         }
     }
 
-    spendSkillPoints = (ranks) => {
-        const { dispatch, classes, skillPoints, skill } = this.props
-        
-    }
-
     render() {
-        const { skill, skills, att, attributes, dispatch, skillPoints, playerClasses, classes } = this.props;
+        const { skill, skills, att, attributes, dispatch } = this.props;
         const { classSkillClasses } = this.state;
         const inputProps = {
             style: {

@@ -29,7 +29,7 @@ class Skills extends Component {
     render() {
         const { skills, skillPoints } = this.props;
         const nestedSkills = ['knowledge', 'profession', 'perform', 'craft', 'speak language']
-        const skillPointTotal = R.sum(R.values(skillPoints.classes));
+        const skillPointTotal = R.sum(R.values(skillPoints.classes)) - skillPoints.used;
         return (
             <SkillsContainer>
                 <SkillHeader>

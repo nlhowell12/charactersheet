@@ -16,7 +16,7 @@ const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
 const ADJUST_CLASS_SKILL_POINTS = 'ADJUST_CLASS_SKILL_POINTS';
 const SELECT_FIRST_LEVEL_CLASS = 'SELECT_FIRST_LEVEL_CLASS';
 const REMOVE_CLASS_SKILL_POINTS = 'REMOVE_CLASS_SKILL_POINTS';
-const USE_CLASS_SKILL_POINTS = 'USE_CLASS_SKILL_POINTS';
+const SET_SKILL_COST = 'SET_SKILL_COST';
 
 const drawerToggle = () => {
     return {
@@ -145,11 +145,11 @@ const selectFirstLevelClass = (playerClass) => {
     }
 }
 
-const useClassSkillPoints = (playerClass, ranks) => {
+const setSkillCost = (skill, crossClass) => {
     return {
-        type: USE_CLASS_SKILL_POINTS,
-        playerClass,
-        ranks
+        type: SET_SKILL_COST,
+        skill,
+        crossClass
     }
 }
 
@@ -172,7 +172,7 @@ export {
     adjustClassSkillPoints,
     selectFirstLevelClass,
     removeClassSkillPoints,
-    useClassSkillPoints,
+    setSkillCost,
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -191,5 +191,5 @@ export {
     ADJUST_CLASS_SKILL_POINTS,
     SELECT_FIRST_LEVEL_CLASS,
     REMOVE_CLASS_SKILL_POINTS,
-    USE_CLASS_SKILL_POINTS,
+    SET_SKILL_COST,
 }
