@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Switch from '@material-ui/core/Switch';
-import { classToggle, addClass, changeClassLevel, adjustSkillPoints, removeSkillPoints, changeOverallSkillTotal, selectFirstLevelClass } from 'actions';
+import { classToggle, addClass, changeClassLevel, adjustClassSkillPoints, removeClassSkillPoints, changeOverallSkillTotal, selectFirstLevelClass } from 'actions';
 import { playerClasses }from 'components/classes';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
@@ -66,7 +66,7 @@ class ClassContainer extends Component {
         })
         dispatch(addClass(playerClass))
         if (Object.keys(classes).indexOf(playerClass) > 0) {
-            dispatch(removeSkillPoints(playerClass))
+            dispatch(removeClassSkillPoints(playerClass))
         }
     }
 
@@ -98,7 +98,7 @@ class ClassContainer extends Component {
         if (playerClass === this.state.first) {
             classSkillPoints = ((playerClasses[playerClass].skillPoints + intMod) * (newLevel - 1)) + ((playerClasses[playerClass].skillPoints + intMod) * 4)
         } 
-        dispatch(adjustSkillPoints(playerClass, classSkillPoints))
+        dispatch(adjustClassSkillPoints(playerClass, classSkillPoints))
         dispatch(selectFirstLevelClass(playerClass))
     }
 

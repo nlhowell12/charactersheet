@@ -1,6 +1,5 @@
-import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_INDIVIDUAL_SKILL_TOTAL, ADD_CLASS, ADJUST_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_SKILL_POINTS } from 'actions'
+import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_INDIVIDUAL_SKILL_TOTAL, ADD_CLASS, ADJUST_CLASS_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_CLASS_SKILL_POINTS, CHANGE_OVERALL_SKILL_TOTAL, USE_CLASS_SKILL_POINTS } from 'actions'
 import * as R from 'ramda'
-import { CHANGE_OVERALL_SKILL_TOTAL } from '../actions/actions';
 import skills from 'components/skillsReference'
 
 const newCharState = {
@@ -96,10 +95,12 @@ export default (state = newCharState, action) => {
             }
         case CHANGE_CLASS_LEVEL:
             return R.set(R.lensPath(['classes', action.playerClass, 'level']), Number(action.newLevel), state)
-        case ADJUST_SKILL_POINTS:
+        case ADJUST_CLASS_SKILL_POINTS:
             return R.set(R.lensPath(['skillPoints', 'classes']), R.assoc(action.playerClass, Number(action.skillPoints), state.skillPoints.classes), state)
-        case REMOVE_SKILL_POINTS:
+        case REMOVE_CLASS_SKILL_POINTS:
             return R.set(R.lensPath(['skillPoints', 'classes']), R.dissoc(action.playerClass, state.skillPoints.classes), state)
+        case USE_CLASS_SKILL_POINTS:
+            return R.set(R.lensPath(['skillPoints', 'classes']), R.assoc(`used${action.playerClass}`, Number(action.ranks), state.skillPoints.classes), state)
         case SELECT_FIRST_LEVEL_CLASS:
             if (state.classes[action.playerClass].first) {
                 return R.set(R.lensPath(['skillPoints']), R.dissoc('first', state.skillPoints), state)

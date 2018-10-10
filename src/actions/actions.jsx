@@ -13,9 +13,10 @@ const CHANGE_OVERALL_SKILL_TOTAL = 'CHANGE_OVERALL_SKILL_TOTAL';
 const CLASS_TOGGLE = 'CLASS_TOGGLE';
 const ADD_CLASS = 'ADD_CLASS';
 const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
-const ADJUST_SKILL_POINTS = 'ADJUST_SKILL_POINTS';
+const ADJUST_CLASS_SKILL_POINTS = 'ADJUST_CLASS_SKILL_POINTS';
 const SELECT_FIRST_LEVEL_CLASS = 'SELECT_FIRST_LEVEL_CLASS';
-const REMOVE_SKILL_POINTS = 'REMOVE_SKILL_POINTS';
+const REMOVE_CLASS_SKILL_POINTS = 'REMOVE_CLASS_SKILL_POINTS';
+const USE_CLASS_SKILL_POINTS = 'USE_CLASS_SKILL_POINTS';
 
 const drawerToggle = () => {
     return {
@@ -123,17 +124,17 @@ const changeClassLevel = (playerClass, newLevel) => {
     }
 }
 
-const adjustSkillPoints = (playerClass, skillPoints) => {
+const adjustClassSkillPoints = (playerClass, skillPoints) => {
     return {
-        type: ADJUST_SKILL_POINTS,
+        type: ADJUST_CLASS_SKILL_POINTS,
         playerClass,
         skillPoints
     }
 }
 
-const removeSkillPoints = (playerClass) => {
+const removeClassSkillPoints = (playerClass) => {
     return {
-        type: REMOVE_SKILL_POINTS,
+        type: REMOVE_CLASS_SKILL_POINTS,
         playerClass
     }
 }
@@ -141,6 +142,14 @@ const selectFirstLevelClass = (playerClass) => {
     return {
         type: SELECT_FIRST_LEVEL_CLASS,
         playerClass
+    }
+}
+
+const useClassSkillPoints = (playerClass, ranks) => {
+    return {
+        type: USE_CLASS_SKILL_POINTS,
+        playerClass,
+        ranks
     }
 }
 
@@ -160,9 +169,10 @@ export {
     classToggle, 
     addClass,
     changeClassLevel,
-    adjustSkillPoints,
+    adjustClassSkillPoints,
     selectFirstLevelClass,
-    removeSkillPoints,
+    removeClassSkillPoints,
+    useClassSkillPoints,
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -178,7 +188,8 @@ export {
     CLASS_TOGGLE,
     ADD_CLASS,
     CHANGE_CLASS_LEVEL,
-    ADJUST_SKILL_POINTS,
+    ADJUST_CLASS_SKILL_POINTS,
     SELECT_FIRST_LEVEL_CLASS,
-    REMOVE_SKILL_POINTS,
+    REMOVE_CLASS_SKILL_POINTS,
+    USE_CLASS_SKILL_POINTS,
 }

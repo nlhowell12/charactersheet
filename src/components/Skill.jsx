@@ -4,7 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
-import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal } from 'actions';
+import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal, useClassSkillPoints } from 'actions';
+import { playerClasses } from 'components/classes'
 
 const SkillInput = styled(TextField)`
     width: 50px; 
@@ -14,6 +15,10 @@ const SkillInput = styled(TextField)`
 
 class Skill extends Component {
 
+    state = {
+        classSkillClasses: []
+    }
+
     componentDidMount = () => {
         const { skill, skills, att, attributes, dispatch } = this.props
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
@@ -22,21 +27,42 @@ class Skill extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        const { skill, skills, att, attributes, dispatch } = this.props
+        const { skill, skills, att, attributes, dispatch, classes } = this.props
+        const { classSkillClasses } = this.state;
         const attMod = attributes[att] > 10 ? Math.floor((attributes[att]-10)/2) : Math.floor((attributes[att]-10)/2)
         let newTotal = skills[skill].ranks + skills[skill].misc + attMod
-        if (this.props.skills[skill].ranks !== prevProps.skills[skill].ranks) {
+        if (skills[skill].ranks !== prevProps.skills[skill].ranks) {
             dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
-        if (this.props.skills[skill].misc !== prevProps.skills[skill].misc) {
+        if (skills[skill].misc !== prevProps.skills[skill].misc) {
             dispatch(changeIndividualSkillTotal(skill, newTotal))
         }
-        if (this.props.attributes[att] !== prevProps.attributes[att]) {
+        if (attributes[att] !== prevProps.attributes[att]) {
             dispatch(changeIndividualSkillTotal(skill, newTotal))
+        }
+        if (classes !== prevProps.classes) {
+            for (let playerClass in playerClasses) {
+                if (classes[playerClass] && playerClasses[playerClass].classSkills.indexOf(skill) >= 0 && classSkillClasses.indexOf(playerClass) === -1) {
+                    this.setState({
+                        ...this.state,
+                        classSkillClasses: [
+                            ...this.state.classSkillClasses,
+                            playerClass
+                        ]
+                    })
+                }
+            }
         }
     }
+
+    spendSkillPoints = (ranks) => {
+        const { dispatch, classes, skillPoints, skill } = this.props
+        
+    }
+
     render() {
-        const { skill, skills, att, attributes, dispatch } = this.props
+        const { skill, skills, att, attributes, dispatch, skillPoints, playerClasses, classes } = this.props;
+        const { classSkillClasses } = this.state;
         const inputProps = {
             style: {
                 textAlign: 'center'
@@ -50,7 +76,10 @@ class Skill extends Component {
 
         return (
             <Paper style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Typography style={{paddingLeft:'5px', paddingTop: '10px'}}>{skill}</Typography>
+                <div>
+                    <Typography style={{paddingLeft:'5px', paddingTop: '10px'}}>{skill}</Typography>
+                    {classSkillClasses.length > 0 ? <Typography style={{paddingLeft:'5px', fontSize: '10px'}}>{`Class Skill: ${classSkillClasses.join(",")}`}</Typography> :  null}
+                </div>
                 <div style={{display:'flex', justifyContent: 'space-around'}}>
                     <SkillInput label="Ranks" value={skills[skill].ranks || ''} InputProps={InputProps} onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}/>
                     <SkillInput label="Att" disabled InputProps={InputProps} value={attMod}/>
@@ -65,7 +94,9 @@ class Skill extends Component {
 const mapStateToProps = (state) => {
     return {
         skills: state.newChar.skills,
-        attributes: state.newChar.attributes
+        attributes: state.newChar.attributes,
+        classes: state.newChar.classes,
+        skillPoints: state.newChar.skillPoints
     }
 }
 
