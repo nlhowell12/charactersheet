@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField';
 import { changeSkillRank, changeSkillMisc, changeIndividualSkillTotal, setSkillCost } from 'actions';
 import { playerClasses } from 'components/classes'
+import * as R from 'ramda';
 
 const SkillInput = styled(TextField)`
     width: 50px; 
@@ -50,13 +51,18 @@ class Skill extends Component {
                             playerClass
                         ]
                     })
+                } else if (!classes[playerClass] && classSkillClasses.indexOf(playerClass) !== -1) {
+                    console.log("REMOVING")
+                    this.setState({
+                        classSkillClasses: R.without(playerClass, classSkillClasses)
+                    })
                 }
-            }
+            } 
         }
     }
 
     render() {
-        const { skill, skills, att, attributes, dispatch } = this.props;
+        const { skill, skills, att, attributes, dispatch, classes } = this.props;
         const { classSkillClasses } = this.state;
         const inputProps = {
             style: {
@@ -76,9 +82,9 @@ class Skill extends Component {
                     {classSkillClasses.length > 0 ? <Typography style={{paddingLeft:'5px', fontSize: '10px'}}>{`Class Skill: ${classSkillClasses.join(",")}`}</Typography> :  null}
                 </div>
                 <div style={{display:'flex', justifyContent: 'space-around'}}>
-                    <SkillInput label="Ranks" value={skills[skill].ranks || ''} InputProps={InputProps} onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}/>
+                    <SkillInput label="Ranks" disabled={Object.keys(classes).length === 0} value={skills[skill].ranks || ''} InputProps={InputProps} onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}/>
                     <SkillInput label="Att" disabled InputProps={InputProps} value={attMod}/>
-                    <SkillInput label="Misc" InputProps={InputProps} onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}/>
+                    <SkillInput label="Misc" disabled={Object.keys(classes).length === 0} InputProps={InputProps} onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}/>
                     <SkillInput label="Total" disabled InputProps={InputProps} value={skills[skill].total || ''}/>
                 </div>
             </Paper>

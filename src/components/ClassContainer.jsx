@@ -67,10 +67,6 @@ class ClassContainer extends Component {
         dispatch(addClass(playerClass))
         if (Object.keys(classes).indexOf(playerClass) >= 0) {
             dispatch(removeClassSkillPoints(playerClass))
-            this.setState({
-                ...this.state,
-                first: ''
-            })
         }
     }
 

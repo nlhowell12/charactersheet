@@ -38,7 +38,7 @@ class TemporaryDrawer extends React.Component {
         {/* Displays sidebar if there is a username in state */}
         {username ? 
         <List>
-          <ListItem button onClick={() => history.push('/newChar')}>
+          <ListItem button onClick={() => history.push('/create')}>
           <ListItemText primary="Create New Character" />
           </ListItem>
           <ListItem button >
