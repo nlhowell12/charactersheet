@@ -29,14 +29,11 @@ class Skills extends Component {
     render() {
         const { skills, skillPoints } = this.props;
         const nestedSkills = ['knowledge', 'profession', 'perform', 'craft', 'speak language']
-        const skillPointTotal = R.sum(R.values(skillPoints.classes)) - skillPoints.used;
         return (
             <SkillsContainer>
                 <SkillHeader>
                     <Typography variant="headline">Skills</Typography>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '180px'}}>
-                    <Typography variant="headline">Skill Points: </Typography>
-                    <SkillPointDisplay>{skillPointTotal}</SkillPointDisplay>
                     </div>
                 </SkillHeader>
                 {Object.keys(skills).map(skill => {

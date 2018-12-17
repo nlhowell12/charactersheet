@@ -1,4 +1,4 @@
-import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_INDIVIDUAL_SKILL_TOTAL, ADD_CLASS, ADJUST_CLASS_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_CLASS_SKILL_POINTS, CHANGE_OVERALL_SKILL_TOTAL, SET_SKILL_COST } from 'actions'
+import { CHANGE_CLASS_LEVEL, CHANGE_ATTRIBUTE, CHANGE_DETAIL, CHANGE_TOP_LEVEL, CHANGE_SKILL_RANK, CHANGE_SKILL_MISC, CHANGE_INDIVIDUAL_SKILL_TOTAL, ADD_CLASS, CHOOSE_CLASS, ADJUST_CLASS_SKILL_POINTS, SELECT_FIRST_LEVEL_CLASS, REMOVE_CLASS_SKILL_POINTS, CHANGE_OVERALL_SKILL_TOTAL, SET_SKILL_COST } from 'actions'
 import * as R from 'ramda'
 import skills from 'components/skillsReference'
 
@@ -12,7 +12,7 @@ const newCharState = {
         classes: {
 
         },
-        used: 0,
+        chosenClass: '',
         first: ''
     },
     details: {
@@ -87,16 +87,24 @@ export default (state = newCharState, action) => {
             return (R.set(R.lensPath(totalSkillPath), Number(action.newTotal), state))
         case CHANGE_OVERALL_SKILL_TOTAL:
             return R.set(R.lensPath(['skillPoints', 'total']), action.newTotal, state)
+        case CHOOSE_CLASS:
+            const chosenLensPath = R.lensPath(['skillPoints', 'chosenClass'])
+            if(R.view(R.lensPath(['skillPoints', 'chosenClass']), state) != action.playerClass){
+                return R.set(chosenLensPath, action.playerClass, state)
+            }
+            else {
+                return R.set(chosenLensPath, '', state)
+            }
         case ADD_CLASS:
             if (action.newClass in state.classes) {
                 return R.set(R.lensPath(['classes']), R.dissoc(action.newClass, state.classes), state)
             } else {
-                return R.set(R.lensPath(['classes']), R.assoc(action.newClass, {level: 0}, state.classes), state)
+                return R.set(R.lensPath(['classes']), R.assoc(action.newClass, {level: 1}, state.classes), state)
             }
         case CHANGE_CLASS_LEVEL:
             return R.set(R.lensPath(['classes', action.playerClass, 'level']), Number(action.newLevel), state)
         case ADJUST_CLASS_SKILL_POINTS:
-            return R.set(R.lensPath(['skillPoints', 'classes']), R.assoc(action.playerClass, Number(action.skillPoints), state.skillPoints.classes), state)
+            return R.set(R.lensPath(['skillPoints', 'classes']), R.assoc(action.playerClass, {total: Number(action.skillPoints), used: 0}, state.skillPoints.classes), state)
         case REMOVE_CLASS_SKILL_POINTS:
             return R.set(R.lensPath(['skillPoints', 'classes']), R.dissoc(action.playerClass, state.skillPoints.classes), state)
         case SET_SKILL_COST:

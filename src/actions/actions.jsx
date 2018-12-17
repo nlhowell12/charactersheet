@@ -10,6 +10,7 @@ const CHANGE_SKILL_RANK = 'CHANGE_SKILL_RANK';
 const CHANGE_SKILL_MISC = 'CHANGE_SKILL_MISC';
 const CHANGE_INDIVIDUAL_SKILL_TOTAL = 'CHANGE_INDIVIDUAL_SKILL_TOTAL';
 const CHANGE_OVERALL_SKILL_TOTAL = 'CHANGE_OVERALL_SKILL_TOTAL';
+const CHOOSE_CLASS = 'CHOOSE_CLASS';
 const CLASS_TOGGLE = 'CLASS_TOGGLE';
 const ADD_CLASS = 'ADD_CLASS';
 const CHANGE_CLASS_LEVEL = 'CHANGE_CLASS_LEVEL';
@@ -17,6 +18,7 @@ const ADJUST_CLASS_SKILL_POINTS = 'ADJUST_CLASS_SKILL_POINTS';
 const SELECT_FIRST_LEVEL_CLASS = 'SELECT_FIRST_LEVEL_CLASS';
 const REMOVE_CLASS_SKILL_POINTS = 'REMOVE_CLASS_SKILL_POINTS';
 const SET_SKILL_COST = 'SET_SKILL_COST';
+
 
 const drawerToggle = () => {
     return {
@@ -102,13 +104,12 @@ const changeIndividualSkillTotal = (skill, newTotal) => {
     }
 }
 
-const changeOverallSkillTotal = (newTotal) => {
+const chooseClass = (playerClass) => {
     return {
-        type: CHANGE_OVERALL_SKILL_TOTAL,
-        newTotal
+        type: CHOOSE_CLASS,
+        playerClass
     }
 }
-
 const addClass = (newClass) => {
     return {
         type: ADD_CLASS,
@@ -165,7 +166,6 @@ export {
     changeSkillRank,
     changeSkillMisc,
     changeIndividualSkillTotal,
-    changeOverallSkillTotal,
     classToggle, 
     addClass,
     changeClassLevel,
@@ -173,6 +173,7 @@ export {
     selectFirstLevelClass,
     removeClassSkillPoints,
     setSkillCost,
+    chooseClass,
     LOGIN, 
     LOGOUT, 
     ADD_CHARACTER, 
@@ -185,6 +186,7 @@ export {
     CHANGE_SKILL_MISC,
     CHANGE_INDIVIDUAL_SKILL_TOTAL,
     CHANGE_OVERALL_SKILL_TOTAL,
+    CHOOSE_CLASS,
     CLASS_TOGGLE,
     ADD_CLASS,
     CHANGE_CLASS_LEVEL,
