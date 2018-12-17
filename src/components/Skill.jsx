@@ -60,6 +60,10 @@ class Skill extends Component {
             } 
         }
     }
+    checkValidRanks = () => {
+        const { skillPoints, skill } = this.props;
+        
+    }
 
     render() {
         const { skill, skills, att, attributes, dispatch, classes } = this.props;
@@ -82,9 +86,19 @@ class Skill extends Component {
                     {classSkillClasses.length > 0 ? <Typography style={{paddingLeft:'5px', fontSize: '10px'}}>{`Class Skill: ${classSkillClasses.join(",")}`}</Typography> :  null}
                 </div>
                 <div style={{display:'flex', justifyContent: 'space-around'}}>
-                    <SkillInput label="Ranks" disabled={Object.keys(classes).length === 0} value={skills[skill].ranks || ''} InputProps={InputProps} onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}/>
+                    <SkillInput 
+                        label="Ranks" 
+                        disabled={Object.keys(classes).length === 0} 
+                        value={skills[skill].ranks || ''} InputProps={InputProps} 
+                        onChange={evt => dispatch(changeSkillRank(skill, evt.target.value))}
+                        />
                     <SkillInput label="Att" disabled InputProps={InputProps} value={attMod}/>
-                    <SkillInput label="Misc" disabled={Object.keys(classes).length === 0} InputProps={InputProps} onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}/>
+                    <SkillInput 
+                        label="Misc" 
+                        disabled={Object.keys(classes).length === 0} 
+                        InputProps={InputProps} 
+                        onChange={evt => dispatch(changeSkillMisc(skill, evt.target.value))}
+                        />
                     <SkillInput label="Total" disabled InputProps={InputProps} value={skills[skill].total || ''}/>
                 </div>
             </Paper>

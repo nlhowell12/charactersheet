@@ -89,7 +89,7 @@ export default (state = newCharState, action) => {
             return R.set(R.lensPath(['skillPoints', 'total']), action.newTotal, state)
         case CHOOSE_CLASS:
             const chosenLensPath = R.lensPath(['skillPoints', 'chosenClass'])
-            if(R.view(R.lensPath(['skillPoints', 'chosenClass']), state) != action.playerClass){
+            if(R.view(R.lensPath(['skillPoints', 'chosenClass']), state) !== action.playerClass){
                 return R.set(chosenLensPath, action.playerClass, state)
             }
             else {

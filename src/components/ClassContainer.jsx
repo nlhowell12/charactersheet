@@ -17,7 +17,7 @@ import * as R from 'ramda';
 
 const ClassWrapper = styled(Paper)`
     width: 600px;
-    height: 200px;
+    height: 160px;
     overflow: scroll;
 `
 const ClassInput = styled(Paper)`
@@ -141,28 +141,28 @@ class ClassContainer extends Component {
                         </div>
                         <div style={{display: 'flex', justifyContent: 'space-between', justifySelf: 'flex-end', width: '300px'}}>
                         <LevelInput 
-                            label="HitDice" 
+                            label="HitDice"
                             value={playerClasses[playerClass].HD || ''} 
                             style={{position: 'relative', left: '10px'}}
                             InputProps={InputProps}
                             disabled
                         />
                         <LevelInput 
-                            label="Skills/level" 
+                            label="Skills/level"
                             value={playerClasses[playerClass].skillPoints || ''} 
                             style={{position: 'relative', left: '10px'}}
                             InputProps={InputProps}
                             disabled
                         />
                         <LevelInput 
-                            label="SkillPoints" 
-                            value={skillPoints.classes[playerClass]|| (classes[playerClass].level * playerClasses[playerClass].skillPoints) + this.getIntMod()} 
+                            label="SkillPoints"
+                            value={skillPoints.classes[playerClass] ? skillPoints.classes[playerClass].total + skillPoints.classes[playerClass].used : (classes[playerClass].level * playerClasses[playerClass].skillPoints) + this.getIntMod()} 
                             style={{position: 'relative', left: '10px'}}
                             InputProps={InputProps}
                             disabled
                         />
                         <LevelInput 
-                            label="Level" 
+                            label="Level"
                             value={classes[playerClass].level || ''} 
                             style={{position: 'relative', left: '10px', paddingRight: '20px'}}
                             InputProps={InputProps}
